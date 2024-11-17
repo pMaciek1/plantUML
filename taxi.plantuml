@@ -1,0 +1,22 @@
+@startuml
+(*) -->"Telefon na infolinie"
+' if "Rodzaj zamowienia" then
+' --> "Na teraz"
+' else
+' -->
+if "Potwierdznie taksówki" then
+--> [Akceptacja] "Dojazd do klienta" as Dojazd
+else 
+--> [Odrzucenie] "Brak wolnych taksówek"
+--> (*)
+endif
+Dojazd --> "Zebranie klienta"
+--> "Podanie adresu docelowego przez klienta"
+if "Opłata" then
+--> [Karta] "Płatność kartą"
+--> (*)
+else
+--> [Gotówa] "Płatność gotówą"
+--> (*)
+endif
+@enduml
