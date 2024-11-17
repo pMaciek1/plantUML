@@ -1,0 +1,32 @@
+@startuml
+
+participant "klient:Klient" as klient
+participant "operator:Operator" as operator
+participant "kierowca:Kierowca" as kierowca
+participant ITSystem
+
+klient -> operator : zamowienieTaxi(adresOdbioru)
+activate klient
+activate operator
+operator -> ITSystem : sprawdzenieDyspozycyjnosci()
+activate ITSystem
+return IdKierowcy
+operator -> kierowca : zlecenie(adresOdbioru)
+activate kierowca
+operator -> klient : potwierdzenieZlecenia
+deactivate operator
+deactivate klient
+
+kierowca -> klient : odbior()
+activate klient
+klient -> kierowca : przekazanieAdresu(adresDocelowy)
+kierowca -> klient : zakonczenieKursu()
+klient -> kierowca : platnosc()
+deactivate klient
+
+kierowca -> ITSystem : zgloszenieDyspozycyjnosci(IdKierowcy)
+deactivate kierowca
+
+
+
+@enduml
